@@ -3,17 +3,15 @@ from pathlib import Path
 
 import datetime
 
-def run():
+def run(folder_name, repo_url):
     def get_datetime():
-        # Get the current date and time
         current_datetime = datetime.datetime.now()
 
-        # Convert the datetime object to a string
         current_datetime_str = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
         return current_datetime_str
 
-    bookmarkFolder = Path('.') / "bookmarkBackup"
+    bookmarkFolder = Path('.') / folder_name
 
     repo = Repo.init(str(bookmarkFolder))
 
@@ -33,7 +31,7 @@ def run():
 
     if not remote_exists:
         print("no remote. adding")
-        repo.create_remote("origin", "https://github.com/jericjan/chrome-bookmarks.git")
+        repo.create_remote("origin", repo_url)
 
     repo.index.add(['Bookmarks.json'])
     is_dirty = repo.is_dirty()
